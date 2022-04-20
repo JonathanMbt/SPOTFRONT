@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+body
+{
+	margin:0;
+	padding:0;
+	background: #F6F6F6;
+}
+
+.rowFullPage
+{
+	display: flex;
+	height: 100vh;
+	align-items: center;
+	justify-content: center;
+}
+
+.Card
+{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+  	background-color: #fff;
+  	border: 1px solid rgba(0,0,0,.125);
+  	border-radius: 2px;
+  	box-shadow: 0 8px 6px -6px #777;
+  	padding: 16px;
+}
+
+.large
+{
+	width: 50vw;
+	height: 25vh;
+}
+
+.formRow
+{
+	margin: 16px;
+}
