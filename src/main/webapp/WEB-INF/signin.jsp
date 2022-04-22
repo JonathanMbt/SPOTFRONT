@@ -30,7 +30,7 @@
 						<c:if test="${erreurs.containsKey('password')}">${erreurs.get('password')}</c:if>
 					</div>
 
-					<input type="submit" name="Se connecter" value="Se connecter" /> 
+					<input type="submit" name="S'inscrire" value="S'inscrire" /> 
 				</form>
 			</div>
 		</div>

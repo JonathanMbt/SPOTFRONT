@@ -19,22 +19,21 @@ import entities.Users;
 import metier.HttpWrapper;
 
 /**
- * Servlet implementation class Home
+ * Servlet implementation class LikedMusics
  */
-@WebServlet("/session/home")
-public class Home extends HttpServlet 
+@WebServlet("/session/likedMusics")
+public class LikedMusics extends HttpServlet 
 {
 	private static final long serialVersionUID = 1L;
+	
 	private Playlists[] lp;
-	private String[] lg;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Home() 
+    public LikedMusics() 
     {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -46,26 +45,22 @@ public class Home extends HttpServlet
 		
 		try 
 		{
-			HashMap<String, Musics[]> lmg = new HashMap<String, Musics[]>();
+			
+			HttpSession session = request.getSession();
+			Users u = (Users) session.getAttribute("user");
 			
 			lp = HttpWrapper.getMultipleInstances(Playlists[].class, "http://localhost/SPOTAPI/spotapi/playlists/all");
-			lg = HttpWrapper.getMultipleInstances(String[].class, "http://localhost/SPOTAPI/spotapi/musics/getGenres");
-			for(String g : lg)
-			{
-				g = java.net.URLEncoder.encode(g, "UTF-8");
-				Musics[] lm = HttpWrapper.getMultipleInstances(Musics[].class, "http://localhost/SPOTAPI/spotapi/musics/findByGenre/" + g);
-				lmg.put(g, lm);
-			}
+			String username = java.net.URLEncoder.encode(u.getUsername(), "UTF-8");
+			Musics[] lm = HttpWrapper.getMultipleInstances(Musics[].class, "http://localhost/SPOTAPI/spotapi/musics/findMusicsLikedByUser/" + username);
 			
 			request.setAttribute("playlists", lp);
-			request.setAttribute("genres", lg);
-			request.setAttribute("musicsByGenre", lmg);
+			request.setAttribute("musics", lm);
 		} catch (Exception e) 
 		{
 			e.printStackTrace();
 		}
 		
-		requestDispatcher = request.getRequestDispatcher("/WEB-INF/home.jsp");
+		requestDispatcher = request.getRequestDispatcher("/WEB-INF/likedMusics.jsp");
 		requestDispatcher.forward(request, response);
 	}
 
@@ -76,36 +71,28 @@ public class Home extends HttpServlet
 	{
 		RequestDispatcher requestDispatcher;
 		
-		List<Users> u = new ArrayList<Users>();
 		
 		HttpSession session = request.getSession();
 		Users user = (Users) session.getAttribute("user");
-		u.add(user);
 		
 		int id = Integer.parseInt(request.getParameter("id"));
 		try 
 		{
-			HashMap<String, Musics[]> lmg = new HashMap<String, Musics[]>();
 			
 			Musics m = HttpWrapper.getOneInstance(Musics.class, "http://localhost/SPOTAPI/spotapi/musics/findById/" + id);
-			m.addUsersLikes(u);
+			m.removeUserLike(user.getUsername());
 			HttpWrapper.postOneInstance(Musics.class, "http://localhost/SPOTAPI/spotapi/musics/update/", m);
 		
-			for(String g : lg)
-			{
-				g = java.net.URLEncoder.encode(g, "UTF-8");
-				Musics[] lm = HttpWrapper.getMultipleInstances(Musics[].class, "http://localhost/SPOTAPI/spotapi/musics/findByGenre/" + g);
-				lmg.put(g, lm);
-			}
+			String username = java.net.URLEncoder.encode(user.getUsername(), "UTF-8");
+			Musics[] lm = HttpWrapper.getMultipleInstances(Musics[].class, "http://localhost/SPOTAPI/spotapi/musics/findMusicsLikedByUser/" + username);
 			
 			request.setAttribute("playlists", lp);
-			request.setAttribute("genres", lg);
-			request.setAttribute("musicsByGenre", lmg);
+			request.setAttribute("musics", lm);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		requestDispatcher = request.getRequestDispatcher("/WEB-INF/home.jsp");
+		requestDispatcher = request.getRequestDispatcher("/WEB-INF/likedMusics.jsp");
 		requestDispatcher.forward(request, response);
 	}
 

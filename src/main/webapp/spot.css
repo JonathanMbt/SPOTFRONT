@@ -15,6 +15,43 @@ body
 	justify-content: center;
 }
 
+.row
+{
+	display: flex;
+	flex-direction: row;
+}
+
+.content .row
+{
+	margin-bottom: 16px;
+}
+
+
+.row .spacing
+{
+	column-gap: 16px;
+	row-gap: 2em;
+}
+
+.row .wrap
+{
+	flex-wrap: wrap;
+}
+
+.row .center
+{
+	align-items: center;
+}
+
+.content
+{
+	flex-grow: 1;
+	padding: 16px;
+	display: flex;
+	flex-direction: column;
+}
+
+
 .Card
 {
 	display: flex;
@@ -28,13 +65,95 @@ body
   	padding: 16px;
 }
 
+a
+{
+	text-decoration: none;
+	color: inherit;
+}
+
+.Card a:hover
+{
+	text-decoration: underline;
+}
+
+.fab
+{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	right: 1em;
+	bottom: 1em;
+	width: 3em;
+	height: 3em;
+	border-radius: 50%;
+	background: #63B175;
+	text-align: center;
+}
+
+.fab:hover
+{
+	cursor: pointer;
+	background: #94db9c;
+}
+
 .large
 {
 	width: 50vw;
 	height: 25vh;
 }
 
+.small
+{
+	width: 8em;
+	height: 5em;
+}
+
 .formRow
 {
 	margin: 16px;
+}
+
+.leftNav
+{
+	position: sticky;
+	top: 0;
+	height: 100vh;
+	width: 18vw;
+	background-color: #fff;
+	border-right: 1px solid rgba(0,0,0,.125);
+	flex-shrink: 0;
+}
+
+.navlink
+{
+	list-style-type: none;
+	padding-inline-start: 0px;
+	margin: 0;
+}
+
+.navlink > li 
+{
+	padding: 0 16px 0 16px;
+	min-height: 3em;
+	display: flex;
+    flex-direction: row;
+    align-items: center;
+    transition: background-color 0.25s ease-out;
+    font-size: 1.15em;
+}
+
+.navlink > li:hover
+{
+	background-color: #F6F6F6;
+}
+
+.spaceDivider
+{
+	min-height: 3em; 
+}
+
+.scroll
+{
+	overflow-y: scroll;
 }

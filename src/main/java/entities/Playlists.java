@@ -16,7 +16,7 @@ public class Playlists implements Serializable
 	private String description;
 	
 	
-	Set<Musics> musics;
+	Set<Musics> musics = new HashSet<Musics>();
 	
 	
 	public Playlists(){}
@@ -77,6 +77,16 @@ public class Playlists implements Serializable
 		this.musics.addAll(musics);
 	}
 	
+	public void removeMusic(int musicId)
+	{
+		for(Musics m : this.musics)
+		{
+			if(m.getId() == musicId)
+			{
+				this.musics.remove(m);
+			}
+		}
+	}
 	
 	
 }

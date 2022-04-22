@@ -63,6 +63,7 @@ public class FactoryUsers
 		
 		try 
 		{
+			username = java.net.URLEncoder.encode(username, "UTF-8");
 			Users u = HttpWrapper.getOneInstance(Users.class, "http://localhost/SPOTAPI/spotapi/users/findByName/" + username);	
 			if(u != null)
 			{

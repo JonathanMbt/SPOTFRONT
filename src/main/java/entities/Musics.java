@@ -20,7 +20,7 @@ public class Musics implements Serializable
 
 	Set<Playlists> playlist;
 	
-	Set<Users> users;
+	Set<Users> users = new HashSet<Users>();
 	
 	public Musics() {}
 	
@@ -86,6 +86,19 @@ public class Musics implements Serializable
 		return users;
 	}
 	
+	public boolean isLikedBy(String username)
+	{
+		boolean result = false;
+		for(Users u : this.users)
+		{
+			if(u.getUsername().equals(username))
+			{
+				result = true;
+			}
+		}
+		return result;
+	}
+	
 	public void setUsersLikes(Set<Users> user)
 	{
 		this.users=user;
@@ -99,6 +112,17 @@ public class Musics implements Serializable
 		}
 		
 		this.users.addAll(users);
+	}
+	
+	public void removeUserLike(String username)
+	{
+		for(Users u : this.users)
+		{
+			if(u.getUsername().equals(username))
+			{
+				this.users.remove(u);
+			}
+		}
 	}
 	
 	

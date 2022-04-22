@@ -134,4 +134,41 @@ public class HttpWrapper
 		
 		return object;
 	}
+	
+	public static <T, F> T deleteOneInstance(Class<T> classname, String stringUrl) throws Exception
+	{
+		T object = null;
+		
+		try 
+		{
+			URL url = new URL(stringUrl);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection(); 
+			conn.setRequestMethod("DELETE");
+			conn.setRequestProperty("Accept", "application/json");
+			
+			if (conn.getResponseCode() != 200 && conn.getResponseCode() != 204) {
+				throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+			}
+			
+			BufferedReader br = new BufferedReader(
+					new InputStreamReader((conn.getInputStream())));
+			
+			String output;
+			while ((output = br.readLine()) != null) 
+			{
+				ObjectMapper mapper = new ObjectMapper();
+				object = mapper.readValue(output, classname); 
+			}
+			
+		}catch (MalformedURLException e) 
+		{
+		       e.printStackTrace();
+	    }
+		catch (IOException e)
+		{ 
+			e.printStackTrace();
+		}
+		
+		return object;
+	}
 }
